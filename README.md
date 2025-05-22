@@ -57,7 +57,7 @@
         const response = await fetch(url);
         const texto = await response.text();
 
-        const filas = texto.trim().split('\n').map(fila => fila.split(','));
+        const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
         const categorias = filas[0]; // fila de encabezados
         const datosDelegados = filas.slice(1); // filas con datos
 
@@ -99,7 +99,7 @@
 </head>
 <body>
   <div class="header">
-    <!-- Reemplaza las URLs de las imágenes con las correctas -->
+    <!-- Reemplaza la URL con la del logo de PLERD -->
     <img src="https://www.instagram.com/plerd_oficial/" alt="Logo PLERD">
     <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/UN_emblem_blue.svg/512px-UN_emblem_blue.svg.png" alt="Logo ONU">
