@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Puntaje del Delegado</title>
+  <title>RESULTADOS DELEGADO REG 15</title>
   <style>
     body {
       font-family: Arial, sans-serif;
