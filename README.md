@@ -42,6 +42,14 @@
     li {
       padding: 5px 0;
     }
+    .registrado {
+      color: green;
+      font-weight: bold;
+    }
+    .no-checkin {
+      color: red;
+      font-weight: bold;
+    }
   </style>
   <script>
     function getDelegadoID() {
@@ -58,8 +66,8 @@
         const texto = await response.text();
 
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-        const categorias = filas[0]; // fila de encabezados
-        const datosDelegados = filas.slice(1); // filas con datos
+        const categorias = filas[2]; // Fila 3 (índice 2) contiene los encabezados de las categorías
+        const datosDelegados = filas.slice(3); // Datos a partir de la fila 4
 
         const delegado = datosDelegados.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
@@ -69,16 +77,24 @@
           return;
         }
 
-        const nombre = delegado[2];      // columna C = nombre del delegado
-        const delegacion = delegado[1]; // columna B = delegación
+        const delegacion = delegado[1]; // Columna B
+        const nombre = delegado[2];     // Columna C
+        const checkin = delegado[3];    // Columna D
 
         let html = `<h2>Resultados del Delegado</h2>`;
         html += `<ul>`;
         html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
         html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
 
-        // Mostrar desde columna D (índice 3) en adelante
-        for (let i = 3; i < categorias.length; i++) {
+        // Estado de Check-In
+        if (checkin.toUpperCase() === "REGISTRADO") {
+          html += `<li><strong>Check-In:</strong> <span class="registrado">REGISTRADO</span></li>`;
+        } else {
+          html += `<li><strong>Check-In:</strong> <span class="no-checkin">NO CHECK-IN</span></li>`;
+        }
+
+        // Mostrar categorías y puntuaciones desde la columna E (índice 4)
+        for (let i = 4; i < categorias.length; i++) {
           const categoria = categorias[i]?.trim() || `Categoría ${i + 1}`;
           const puntuacion = delegado[i]?.trim() || '0';
           html += `<li><strong>${categoria}:</strong> ${puntuacion}</li>`;
