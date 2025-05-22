@@ -100,9 +100,9 @@
 <body>
   <div class="header">
     <!-- Reemplaza la URL con la del logo de PLERD -->
-    <img src="https://www.instagram.com/plerd_oficial/" alt="Logo PLERD">
+    <img src="https://th.bing.com/th/id/OIP.eUvmdBETrHskQkE5VPwQSQHaHa?cb=iwc2&rs=1&pid=ImgDetMain" alt="Logo PLERD">
     <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/UN_emblem_blue.svg/512px-UN_emblem_blue.svg.png" alt="Logo ONU">
+    <img src="https://th.bing.com/th/id/OIP.4gmmq7apwbwzRtkucTzbJAHaGS?cb=iwc2&rs=1&pid=ImgDetMain" alt="Logo ONU">
   </div>
   <div class="card">
     <div id="contenido">Cargando datos...</div>
