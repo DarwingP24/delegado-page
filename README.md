@@ -24,14 +24,10 @@
         const response = await fetch(url);
         const texto = await response.text();
 
-        // Convertir el CSV en filas y columnas
         const filas = texto.trim().split('\n').map(fila => fila.split(','));
 
-        // Categorías están en fila 3 (índice 2)
-        const categorias = filas[2];
-
-        // Buscar delegado en las filas desde índice 3 en adelante
-        const datosDelegados = filas.slice(3);
+        const categorias = filas[0]; // encabezados reales
+        const datosDelegados = filas.slice(1); // resto de los datos
         const delegado = datosDelegados.find(fila => fila[0].trim() === id);
 
         const contenedor = document.getElementById('contenido');
@@ -48,7 +44,7 @@
         html += `<h3>Delegación: ${delegacion}</h3>`;
         html += `<ul>`;
 
-        // Mostrar desde columna D (índice 3) en adelante
+        // desde columna 3 en adelante (índice 3)
         for (let i = 3; i < categorias.length; i++) {
           const categoria = categorias[i] || `Categoría ${i + 1}`;
           const puntuacion = delegado[i] || '0';
@@ -60,4 +56,18 @@
 
       } catch (error) {
         console.error(error);
-        document.getElementById('c
+        document.getElementById('contenido').innerHTML = `<p>Error al cargar los datos.</p>`;
+      }
+    }
+
+    window.onload = cargarDatos;
+    setInterval(cargarDatos, 60000);
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h1>Resultados del Delegado</h1>
+    <div id="contenido">Cargando datos...</div>
+  </div>
+</body>
+</html>
