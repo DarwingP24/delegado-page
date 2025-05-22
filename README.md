@@ -4,11 +4,44 @@
   <meta charset="UTF-8" />
   <title>Puntaje del Delegado</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 30px; background: #f0f2f5; }
-    .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
-    h1, h2, h3 { text-align: center; }
-    ul { list-style: none; padding: 0; }
-    li { padding: 5px 0; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f0f2f5;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .header img {
+      height: 60px;
+    }
+    .header h1 {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 24px;
+      margin: 0 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    h2, h3 {
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 5px 0;
+    }
   </style>
   <script>
     function getDelegadoID() {
@@ -65,8 +98,13 @@
   </script>
 </head>
 <body>
+  <div class="header">
+    <!-- Reemplaza las URLs de las imágenes con las correctas -->
+    <img src="https://www.instagram.com/plerd_oficial/" alt="Logo PLERD">
+    <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/UN_emblem_blue.svg/512px-UN_emblem_blue.svg.png" alt="Logo ONU">
+  </div>
   <div class="card">
-    <h1>Resultados del Delegado</h1>
     <div id="contenido">Cargando datos...</div>
   </div>
 </body>
