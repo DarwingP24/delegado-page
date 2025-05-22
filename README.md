@@ -23,8 +23,16 @@
         const response = await fetch(url);
         const texto = await response.text();
 
+        // Separar filas y columnas
         const filas = texto.trim().split('\n').map(f => f.split(','));
-        const headers = filas[0];
+
+        // fila 1 (indice 0) es para identificar delegados (id, nombre, etc)
+        const encabezados = filas[0];
+
+        // fila 4 (indice 3) tiene las categorías
+        const categorias = filas[3];
+
+        // Buscar delegado por id en la primera columna
         const delegado = filas.find(f => f[0].trim() === id);
 
         const contenedor = document.getElementById('contenido');
@@ -35,8 +43,10 @@
 
         const nombre = delegado[1];
         let html = `<h2>${nombre} (${id})</h2><ul>`;
-        for (let i = 2; i < headers.length; i++) {
-          html += `<li><strong>${headers[i]}:</strong> ${delegado[i]}</li>`;
+
+        // Empezamos en 2 porque 0 es id, 1 es nombre
+        for (let i = 2; i < encabezados.length; i++) {
+          html += `<li><strong>${categorias[i]}:</strong> ${delegado[i]}</li>`;
         }
         html += '</ul>';
         contenedor.innerHTML = html;
