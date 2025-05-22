@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Puntaje del Delegado</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 30px; background: #f0f2f5; }
@@ -23,17 +23,15 @@
         const response = await fetch(url);
         const texto = await response.text();
 
-        // Separar filas y columnas
+        // Separar filas y columnas por salto de línea y coma
         const filas = texto.trim().split('\n').map(f => f.split(','));
 
-        // fila 1 (indice 0) es para identificar delegados (id, nombre, etc)
-        const encabezados = filas[0];
+        // La fila 3 (índice 2) contiene las categorías
+        const categorias = filas[2];
 
-        // fila 4 (indice 3) tiene las categorías
-        const categorias = filas[3];
-
-        // Buscar delegado por id en la primera columna
-        const delegado = filas.find(f => f[0].trim() === id);
+        // Los datos empiezan en la fila 4 (índice 3)
+        // Buscamos la fila cuyo ID en columna 0 sea igual al id buscado
+        const delegado = filas.slice(3).find(f => f[0].trim() === id);
 
         const contenedor = document.getElementById('contenido');
         if (!delegado) {
@@ -41,17 +39,27 @@
           return;
         }
 
-        const nombre = delegado[1];
-        let html = `<h2>${nombre} (${id})</h2><ul>`;
+        // Nombre del delegado (columna C, índice 2)
+        const nombre = delegado[2];
+        // Delegacion (columna B, índice 1)
+        const delegacion = delegado[1];
 
-        // Empezamos en 2 porque 0 es id, 1 es nombre
-        for (let i = 2; i < encabezados.length; i++) {
+        let html = `<h2>${nombre} (${id})</h2>`;
+        html += `<h3>Delegación: ${delegacion}</h3>`;
+        html += '<ul>';
+
+        // Las puntuaciones están desde columna D (índice 3) hasta el final de las columnas relevantes
+        // Mostramos categoría (categorias[i]) y su puntuación delegado[i]
+        for (let i = 3; i < categorias.length; i++) {
           html += `<li><strong>${categorias[i]}:</strong> ${delegado[i]}</li>`;
         }
         html += '</ul>';
+
         contenedor.innerHTML = html;
+
       } catch (error) {
         document.getElementById('contenido').innerHTML = `<p>Error al cargar los datos. Intenta más tarde.</p>`;
+        console.error(error);
       }
     }
 
