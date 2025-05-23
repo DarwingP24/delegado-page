@@ -7,22 +7,23 @@
     body {
       font-family: Arial, sans-serif;
       padding: 30px;
-      background: #f0f2f5;
+      background-image: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      background-attachment: fixed;
+      background-color: #f0f2f5;
     }
     .header {
       text-align: center;
       margin-bottom: 20px;
-    }
-    .header img {
-      height: 100px;
-      margin-bottom: 10px;
     }
     .header h1 {
       font-size: 28px;
       margin: 0;
     }
     .card {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -112,7 +113,6 @@
 </head>
 <body>
   <div class="header">
-    <img src="https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png" alt="Logo Central">
     <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
   </div>
   <div class="card">
