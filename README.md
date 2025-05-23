@@ -112,7 +112,7 @@
 </head>
 <body>
   <div class="header">
-    <img src="https://ibb.co/WvDHdkvK" alt="Logo Central">
+    <img src="https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png" alt="Logo Central">
     <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
   </div>
   <div class="card">
