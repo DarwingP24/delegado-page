@@ -7,7 +7,7 @@
     body {
       font-family: Arial, sans-serif;
       padding: 30px;
-      background-image: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png');
+      background-image: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;
