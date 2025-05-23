@@ -10,19 +10,16 @@
       background: #f0f2f5;
     }
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      text-align: center;
       margin-bottom: 20px;
     }
     .header img {
-      height: 60px;
+      height: 80px;
+      margin-bottom: 10px;
     }
     .header h1 {
-      flex-grow: 1;
-      text-align: center;
-      font-size: 24px;
-      margin: 0 20px;
+      font-size: 28px;
+      margin: 0;
     }
     .card {
       background: #fff;
@@ -115,13 +112,12 @@
 </head>
 <body>
   <div class="header">
-    <!-- Reemplaza la URL con la del logo de PLERD -->
-    <img src="https://th.bing.com/th/id/OIP.eUvmdBETrHskQkE5VPwQSQHaHa?cb=iwc2&rs=1&pid=ImgDetMain" alt="Logo PLERD">
+    <img src="https://ibb.co/WvDHdkvK" alt="Logo Central">
     <h1>DECIMO SEXTO MODELO REGIONAL 15</h1>
-    <img src="https://th.bing.com/th/id/OIP.4gmmq7apwbwzRtkucTzbJAHaGS?cb=iwc2&rs=1&pid=ImgDetMain" alt="Logo ONU">
   </div>
   <div class="card">
     <div id="contenido">Cargando datos...</div>
   </div>
 </body>
 </html>
+
