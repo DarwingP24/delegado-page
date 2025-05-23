@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -10,10 +10,10 @@
       margin: 0;
       padding: 0;
       height: 100%;
+      overflow: hidden; /* Deshabilita el scroll */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
       background-size: cover;
-      overflow: hidden; /* Evita el scroll */
     }
 
     /* Contenedor principal */
@@ -75,7 +75,6 @@
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: red;
     }
 
     ul {
@@ -91,6 +90,16 @@
 
     .rojo {
       color: red;
+      font-weight: bold;
+    }
+
+    .verde {
+      color: green;
+      font-weight: bold;
+    }
+
+    .azul {
+      color: blue;
       font-weight: bold;
     }
 
@@ -155,7 +164,7 @@
         titulo.textContent = "Resultados del Delegado";
         cargarDatos(urlResultados, id, 'resultados');
       } else if (seccion === 'ficha') {
-        titulo.textContent = "Ficha Médica";
+        titulo.innerHTML = "<span class='rojo'>Ficha Médica</span>";
         cargarDatos(urlFichaMedica, id, 'ficha');
       }
     }
@@ -190,7 +199,7 @@
 
           // Estado de Check-In
           if (checkin.toUpperCase() === "REGISTRADO") {
-            html += `<li><strong>Check-In:</strong> <span class="rojo">REGISTRADO</span></li>`;
+            html += `<li><strong>Check-In:</strong> <span class="verde">REGISTRADO</span></li>`;
           } else {
             html += `<li><strong>Check-In:</strong> <span class="rojo">NO CHECK-IN</span></li>`;
           }
@@ -206,7 +215,7 @@
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
-            html += `<li><strong>${campo}:</strong> <span class="rojo">${valor}</span></li>`;
+            html += `<li><strong class="azul">${campo}:</strong> <span class="azul">${valor}</span></li>`;
           }
         }
 
@@ -226,6 +235,3 @@
   </script>
 </body>
 </html>
-
-
-
