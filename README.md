@@ -11,8 +11,18 @@
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
+    }
+
+    /* Contenedor del fondo */
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center;
       background-size: cover;
+      z-index: -1;
     }
 
     /* Contenedor principal */
@@ -120,6 +130,7 @@
   </style>
 </head>
 <body>
+  <div class="bg"></div>
   <div class="container">
     <!-- Menú de navegación -->
     <nav class="navbar">
