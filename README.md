@@ -12,7 +12,7 @@
       height: 100%;
       overflow: hidden; /* Deshabilita el scroll */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png') no-repeat center center fixed;
+      background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
       background-size: cover;
     }
 
