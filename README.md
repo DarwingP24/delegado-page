@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -9,10 +10,10 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden; /* Deshabilita el scroll */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
       background-size: cover;
+      overflow: hidden; /* Evita el scroll */
     }
 
     /* Contenedor principal */
