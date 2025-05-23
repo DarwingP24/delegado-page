@@ -13,8 +13,6 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
-      color: #fff;
     }
 
     /* Contenedor principal */
@@ -24,8 +22,6 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      z-index: 1;
-      position: relative;
       padding: 20px;
     }
 
@@ -222,6 +218,10 @@
     window.onload = () => {
       mostrarSeccion('resultados');
     };
+  </script>
+</body>
+</html>
+
   </script>
 </body>
 </html>
