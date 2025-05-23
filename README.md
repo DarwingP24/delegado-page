@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Delegado - Resultados y Ficha Médica</title>
   <style>
     /* Estilos generales */
@@ -16,17 +16,9 @@
       position: relative;
     }
 
-    /* Capa de superposición para difuminar el fondo */
+    /* Eliminar difuminado */
     body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(8px);
-      background-color: rgba(0, 0, 0, 0.4);
-      z-index: 0;
+      content: none;
     }
 
     /* Contenedor principal */
@@ -50,6 +42,7 @@
       align-items: center;
       border-radius: 5px;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
     .nav-list {
@@ -59,10 +52,12 @@
       justify-content: center;
       margin: 0;
       padding: 0;
+      width: 100%;
+      max-width: 600px;
     }
 
     .nav-list li {
-      margin: 0 15px;
+      margin: 5px 15px;
     }
 
     .nav-list li a {
@@ -70,6 +65,7 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
+      white-space: nowrap;
     }
 
     .nav-list li a:hover {
@@ -84,6 +80,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
+      box-sizing: border-box;
     }
 
     h2 {
@@ -92,15 +89,21 @@
       color: #333;
     }
 
+    h2.ficha-titulo {
+      color: red;
+    }
+
     ul {
       list-style: none;
       padding: 0;
+      text-align: center;
     }
 
     li {
       margin-bottom: 10px;
       font-size: 16px;
       color: #555;
+      word-wrap: break-word;
     }
 
     .registrado {
@@ -143,17 +146,14 @@
   </div>
 
   <script>
-    // Función para obtener el ID del delegado desde la URL
     function getDelegadoID() {
       const params = new URLSearchParams(window.location.search);
       return params.get("id");
     }
 
-    // URLs de las hojas de cálculo publicadas como CSV
     const urlResultados = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
-    const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv"; // Reemplaza 'gid=123456789' con el GID real de la hoja de ficha médica
+    const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv";
 
-    // Función para mostrar la sección seleccionada
     function mostrarSeccion(seccion) {
       const id = getDelegadoID();
       const titulo = document.getElementById('titulo');
@@ -166,22 +166,23 @@
 
       if (seccion === 'resultados') {
         titulo.textContent = "Resultados del Delegado";
+        titulo.classList.remove('ficha-titulo');
         cargarDatos(urlResultados, id, 'resultados');
       } else if (seccion === 'ficha') {
         titulo.textContent = "Ficha Médica";
+        titulo.classList.add('ficha-titulo');
         cargarDatos(urlFichaMedica, id, 'ficha');
       }
     }
 
-    // Función para cargar los datos desde Google Sheets
     async function cargarDatos(url, id, tipo) {
       try {
         const response = await fetch(url);
         const texto = await response.text();
 
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-        const encabezados = filas[2]; // Fila 3 (índice 2) contiene los encabezados
-        const datos = filas.slice(3); // Datos a partir de la fila 4
+        const encabezados = filas[2];
+        const datos = filas.slice(3);
 
         const delegado = datos.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
@@ -191,31 +192,28 @@
           return;
         }
 
-        let html = `<ul>`;
+        let html = '<ul>';
 
         if (tipo === 'resultados') {
-          const delegacion = delegado[1]; // Columna B
-          const nombre = delegado[2];     // Columna C
-          const checkin = delegado[3];    // Columna D
+          const delegacion = delegado[1];
+          const nombre = delegado[2];
+          const checkin = delegado[3];
 
           html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
           html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
 
-          // Estado de Check-In
           if (checkin.toUpperCase() === "REGISTRADO") {
             html += `<li><strong>Check-In:</strong> <span class="registrado">REGISTRADO</span></li>`;
           } else {
             html += `<li><strong>Check-In:</strong> <span class="no-checkin">NO CHECK-IN</span></li>`;
           }
 
-          // Mostrar categorías y puntuaciones desde la columna E (índice 4)
           for (let i = 4; i < encabezados.length; i++) {
             const categoria = encabezados[i]?.trim() || `Categoría ${i + 1}`;
             const puntuacion = delegado[i]?.trim() || '0';
             html += `<li><strong>${categoria}:</strong> ${puntuacion}</li>`;
           }
         } else if (tipo === 'ficha') {
-          // Mostrar todos los campos de la ficha médica
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
@@ -223,7 +221,7 @@
           }
         }
 
-        html += `</ul>`;
+        html += '</ul>';
         contenedor.innerHTML = html;
 
       } catch (error) {
@@ -232,7 +230,6 @@
       }
     }
 
-    // Cargar la sección de resultados por defecto al cargar la página
     window.onload = () => {
       mostrarSeccion('resultados');
     };
