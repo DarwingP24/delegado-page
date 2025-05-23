@@ -9,6 +9,7 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
       background-size: cover;
