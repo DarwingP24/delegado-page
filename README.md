@@ -14,7 +14,7 @@
       margin-bottom: 20px;
     }
     .header img {
-      height: 80px;
+      height: 100px;
       margin-bottom: 10px;
     }
     .header h1 {
@@ -120,4 +120,3 @@
   </div>
 </body>
 </html>
-
