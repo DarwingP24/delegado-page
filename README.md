@@ -13,18 +13,17 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
     }
 
     /* Contenedor principal */
     .container {
-      position: relative;
-      z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      justify-content: center;
       min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     /* Menú de navegación */
@@ -71,10 +70,10 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
+      text-align: center;
     }
 
     h2 {
-      text-align: center;
       margin-bottom: 20px;
       color: #333;
     }
@@ -82,6 +81,7 @@
     ul {
       list-style: none;
       padding: 0;
+      text-align: left;
     }
 
     li {
@@ -100,9 +100,9 @@
       font-weight: bold;
     }
 
-    /* Título de Ficha Médica en rojo */
-    .ficha h2 {
+    .ficha-titulo {
       color: red;
+      font-weight: bold;
     }
 
     /* Responsividad */
@@ -143,7 +143,7 @@
 
     // URLs de las hojas de cálculo publicadas como CSV
     const urlResultados = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
-    const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv"; // Reemplaza 'gid=123456789' con el GID real de la hoja de ficha médica
+    const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv";
 
     // Función para mostrar la sección seleccionada
     function mostrarSeccion(seccion) {
@@ -211,7 +211,7 @@
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
-            html += `<li><strong>${campo}:</strong> ${valor}</li>`;
+            html += `<li><strong class="ficha-titulo">${campo}:</strong> ${valor}</li>`;
           }
         }
 
