@@ -6,10 +6,11 @@
   <title>Delegado - Resultados y Ficha Médica</title>
   <style>
     /* Estilos generales */
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      overflow: hidden; /* Deshabilita el scroll */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png') no-repeat center center fixed;
       background-size: cover;
@@ -21,8 +22,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      height: 100%;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     /* Menú de navegación */
@@ -31,8 +33,6 @@
       padding: 10px 20px;
       border-radius: 5px;
       margin-bottom: 20px;
-      width: 100%;
-      max-width: 600px;
       text-align: center;
     }
 
@@ -40,10 +40,12 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .nav-list li {
-      display: inline;
       margin: 0 15px;
     }
 
@@ -66,12 +68,14 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
+      overflow-y: auto; /* Permite scroll interno si es necesario */
+      max-height: 70vh; /* Altura máxima para evitar desbordamiento */
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
-      color: #333;
+      color: red;
     }
 
     ul {
@@ -92,17 +96,18 @@
 
     /* Responsividad */
     @media (max-width: 600px) {
-      body, html {
-        background-attachment: scroll;
+      .nav-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-list li {
+        margin: 5px 0;
       }
 
       .card {
         padding: 20px;
-      }
-
-      .nav-list li {
-        display: block;
-        margin: 5px 0;
+        max-height: 60vh;
       }
     }
   </style>
@@ -221,5 +226,6 @@
   </script>
 </body>
 </html>
+
 
 
