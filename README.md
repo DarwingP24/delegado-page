@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RESULTADOS DELEGADO REG 15</title>
+  <title>Delegado - Resultados y Ficha Médica</title>
   <style>
     /* Estilos generales */
     body, html {
@@ -130,16 +130,14 @@
     <!-- Menú de navegación -->
     <nav class="navbar">
       <ul class="nav-list">
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Resultados del Delegado</a></li>
-        <li><a href="#">Categorías</a></li>
-        <li><a href="#">Contacto</a></li>
+        <li><a href="#" onclick="mostrarSeccion('resultados')">Resultados del Delegado</a></li>
+        <li><a href="#" onclick="mostrarSeccion('ficha')">Ficha Médica</a></li>
       </ul>
     </nav>
 
     <!-- Tarjeta de contenido -->
     <div class="card">
-      <h2>Resultados del Delegado</h2>
+      <h2 id="titulo">Resultados del Delegado</h2>
       <div id="contenido">Cargando datos...</div>
     </div>
   </div>
@@ -151,20 +149,41 @@
       return params.get("id");
     }
 
-    // Función para cargar los datos desde Google Sheets
-    async function cargarDatos() {
-      const id = getDelegadoID();
-      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
+    // URLs de las hojas de cálculo publicadas como CSV
+    const urlResultados = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
+    const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=123456789&single=true&output=csv"; // Reemplaza 'gid=123456789' con el GID real de la hoja de ficha médica
 
+    // Función para mostrar la sección seleccionada
+    function mostrarSeccion(seccion) {
+      const id = getDelegadoID();
+      const titulo = document.getElementById('titulo');
+      const contenido = document.getElementById('contenido');
+
+      if (!id) {
+        contenido.innerHTML = "<p><strong>ID de delegado no proporcionado en la URL.</strong></p>";
+        return;
+      }
+
+      if (seccion === 'resultados') {
+        titulo.textContent = "Resultados del Delegado";
+        cargarDatos(urlResultados, id, 'resultados');
+      } else if (seccion === 'ficha') {
+        titulo.textContent = "Ficha Médica";
+        cargarDatos(urlFichaMedica, id, 'ficha');
+      }
+    }
+
+    // Función para cargar los datos desde Google Sheets
+    async function cargarDatos(url, id, tipo) {
       try {
         const response = await fetch(url);
         const texto = await response.text();
 
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-        const categorias = filas[2]; // Fila 3 (índice 2) contiene los encabezados de las categorías
-        const datosDelegados = filas.slice(3); // Datos a partir de la fila 4
+        const encabezados = filas[2]; // Fila 3 (índice 2) contiene los encabezados
+        const datos = filas.slice(3); // Datos a partir de la fila 4
 
-        const delegado = datosDelegados.find(fila => fila[0].trim() === id);
+        const delegado = datos.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
 
         if (!delegado) {
@@ -172,26 +191,36 @@
           return;
         }
 
-        const delegacion = delegado[1]; // Columna B
-        const nombre = delegado[2];     // Columna C
-        const checkin = delegado[3];    // Columna D
-
         let html = `<ul>`;
-        html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
-        html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
 
-        // Estado de Check-In
-        if (checkin.toUpperCase() === "REGISTRADO") {
-          html += `<li><strong>Check-In:</strong> <span class="registrado">REGISTRADO</span></li>`;
-        } else {
-          html += `<li><strong>Check-In:</strong> <span class="no-checkin">NO CHECK-IN</span></li>`;
-        }
+        if (tipo === 'resultados') {
+          const delegacion = delegado[1]; // Columna B
+          const nombre = delegado[2];     // Columna C
+          const checkin = delegado[3];    // Columna D
 
-        // Mostrar categorías y puntuaciones desde la columna E (índice 4)
-        for (let i = 4; i < categorias.length; i++) {
-          const categoria = categorias[i]?.trim() || `Categoría ${i + 1}`;
-          const puntuacion = delegado[i]?.trim() || '0';
-          html += `<li><strong>${categoria}:</strong> ${puntuacion}</li>`;
+          html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
+          html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
+
+          // Estado de Check-In
+          if (checkin.toUpperCase() === "REGISTRADO") {
+            html += `<li><strong>Check-In:</strong> <span class="registrado">REGISTRADO</span></li>`;
+          } else {
+            html += `<li><strong>Check-In:</strong> <span class="no-checkin">NO CHECK-IN</span></li>`;
+          }
+
+          // Mostrar categorías y puntuaciones desde la columna E (índice 4)
+          for (let i = 4; i < encabezados.length; i++) {
+            const categoria = encabezados[i]?.trim() || `Categoría ${i + 1}`;
+            const puntuacion = delegado[i]?.trim() || '0';
+            html += `<li><strong>${categoria}:</strong> ${puntuacion}</li>`;
+          }
+        } else if (tipo === 'ficha') {
+          // Mostrar todos los campos de la ficha médica
+          for (let i = 1; i < encabezados.length; i++) {
+            const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
+            const valor = delegado[i]?.trim() || 'N/A';
+            html += `<li><strong>${campo}:</strong> ${valor}</li>`;
+          }
         }
 
         html += `</ul>`;
@@ -199,4 +228,15 @@
 
       } catch (error) {
         console.error(error);
-        document.getElementById('con
+        document.getElementById('contenido').innerHTML = "<p><strong>Error al cargar los datos.</strong></p>";
+      }
+    }
+
+    // Cargar la sección de resultados por defecto al cargar la página
+    window.onload = () => {
+      mostrarSeccion('resultados');
+    };
+  </script>
+</body>
+</html>
+
