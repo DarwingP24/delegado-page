@@ -13,6 +13,8 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/YCxg0JvK/Dise-o-sin-t-tulo-2.png') no-repeat center center fixed;
       background-size: cover;
+      position: relative;
+      color: #fff;
     }
 
     /* Contenedor principal */
@@ -22,37 +24,35 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      z-index: 1;
+      position: relative;
       padding: 20px;
-      box-sizing: border-box;
     }
 
     /* Menú de navegación */
     .navbar {
-      width: 100%;
-      background-color: #004080;
+      background-color: rgba(0, 64, 128, 0.8);
       padding: 10px 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       border-radius: 5px;
       margin-bottom: 20px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
     }
 
     .nav-list {
       list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
       margin: 0;
       padding: 0;
     }
 
     .nav-list li {
+      display: inline;
       margin: 0 15px;
     }
 
     .nav-list li a {
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
@@ -64,16 +64,16 @@
 
     /* Tarjeta de contenido */
     .card {
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: rgba(255, 255, 255, 0.9);
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
-      text-align: center;
     }
 
     h2 {
+      text-align: center;
       margin-bottom: 20px;
       color: #333;
     }
@@ -81,7 +81,6 @@
     ul {
       list-style: none;
       padding: 0;
-      text-align: left;
     }
 
     li {
@@ -90,29 +89,24 @@
       color: #555;
     }
 
-    .registrado {
-      color: green;
-      font-weight: bold;
-    }
-
-    .no-checkin {
-      color: red;
-      font-weight: bold;
-    }
-
-    .ficha-titulo {
+    .rojo {
       color: red;
       font-weight: bold;
     }
 
     /* Responsividad */
     @media (max-width: 600px) {
+      body, html {
+        background-attachment: scroll;
+      }
+
       .card {
         padding: 20px;
       }
 
       .nav-list li {
-        margin: 5px 10px;
+        display: block;
+        margin: 5px 0;
       }
     }
   </style>
@@ -195,9 +189,9 @@
 
           // Estado de Check-In
           if (checkin.toUpperCase() === "REGISTRADO") {
-            html += `<li><strong>Check-In:</strong> <span class="registrado">REGISTRADO</span></li>`;
+            html += `<li><strong>Check-In:</strong> <span class="rojo">REGISTRADO</span></li>`;
           } else {
-            html += `<li><strong>Check-In:</strong> <span class="no-checkin">NO CHECK-IN</span></li>`;
+            html += `<li><strong>Check-In:</strong> <span class="rojo">NO CHECK-IN</span></li>`;
           }
 
           // Mostrar categorías y puntuaciones desde la columna E (índice 4)
@@ -211,7 +205,7 @@
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
-            html += `<li><strong class="ficha-titulo">${campo}:</strong> ${valor}</li>`;
+            html += `<li><strong>${campo}:</strong> <span class="rojo">${valor}</span></li>`;
           }
         }
 
@@ -231,3 +225,4 @@
   </script>
 </body>
 </html>
+
