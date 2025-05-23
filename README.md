@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -10,10 +10,10 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden; /* Deshabilita el scroll */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center fixed;
       background-size: cover;
+      overflow-x: hidden;
     }
 
     /* Contenedor principal */
@@ -21,8 +21,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100%;
+      justify-content: flex-start;
+      min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -68,13 +68,14 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
-      overflow-y: auto; /* Permite scroll interno si es necesario */
-      max-height: 70vh; /* Altura máxima para evitar desbordamiento */
+      overflow-y: auto;
+      max-height: 70vh;
     }
 
     h2 {
       text-align: center;
       margin-bottom: 20px;
+      color: red;
     }
 
     ul {
@@ -88,18 +89,17 @@
       color: #555;
     }
 
-    .rojo {
-      color: red;
-      font-weight: bold;
-    }
-
     .verde {
       color: green;
       font-weight: bold;
     }
 
-    .azul {
-      color: blue;
+    .rojo {
+      color: red;
+      font-weight: bold;
+    }
+
+    .negrita {
       font-weight: bold;
     }
 
@@ -116,7 +116,7 @@
 
       .card {
         padding: 20px;
-        max-height: 60vh;
+        max-height: none;
       }
     }
   </style>
@@ -164,7 +164,7 @@
         titulo.textContent = "Resultados del Delegado";
         cargarDatos(urlResultados, id, 'resultados');
       } else if (seccion === 'ficha') {
-        titulo.innerHTML = "<span class='rojo'>Ficha Médica</span>";
+        titulo.textContent = "Ficha Médica";
         cargarDatos(urlFichaMedica, id, 'ficha');
       }
     }
@@ -215,7 +215,7 @@
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
-            html += `<li><strong class="azul">${campo}:</strong> <span class="azul">${valor}</span></li>`;
+            html += `<li><strong>${campo}:</strong> <span class="negrita">${valor}</span></li>`;
           }
         }
 
