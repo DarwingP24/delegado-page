@@ -9,21 +9,20 @@
     html, body {
       margin: 0;
       padding: 0;
-      min-height: 100dvh;
+      height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
-      position: relative;
     }
 
-    /* Contenedor del fondo */
+    /* Fondo adaptable */
     .bg {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      min-height: 100dvh;
+      min-width: 100%;
+      min-height: 100%;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center;
       background-size: cover;
+      background-attachment: scroll;
       z-index: -1;
     }
 
@@ -33,7 +32,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      min-height: 100%;
+      min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -73,14 +72,14 @@
 
     /* Tarjeta de contenido */
     .card {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       max-width: 600px;
       width: 100%;
       overflow-y: auto;
-      max-height: 70vh;
+      max-height: 80vh;
     }
 
     h2 {
@@ -208,11 +207,11 @@
           html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
           html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
 
-          if (checkin.toUpperCase() === "REGISTRADO") {
-            html += `<li><strong>Check-In:</strong> <span class="verde">REGISTRADO</span></li>`;
-          } else {
-            html += `<li><strong>Check-In:</strong> <span class="rojo">NO CHECK-IN</span></li>`;
-          }
+          html += `<li><strong>Check-In:</strong> ${
+            checkin.toUpperCase() === "REGISTRADO"
+              ? `<span class="verde">REGISTRADO</span>`
+              : `<span class="rojo">NO CHECK-IN</span>`
+          }</li>`;
 
           for (let i = 4; i < encabezados.length; i++) {
             const categoria = encabezados[i]?.trim() || `Categoría ${i + 1}`;
@@ -236,7 +235,7 @@
       }
     }
 
-    // Cargar la sección de resultados por defecto al cargar la página
+    // Cargar sección predeterminada
     window.onload = () => {
       mostrarSeccion('resultados');
     };
