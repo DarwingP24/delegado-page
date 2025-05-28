@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Delegado - Resultados y Ficha Médica</title>
   <style>
-    /* Estilos generales */
     html, body {
       margin: 0;
       padding: 0;
@@ -15,18 +14,17 @@
 
     /* Fondo adaptable */
     .bg {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
-      min-width: 100%;
-      min-height: 100%;
-      background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.postimg.cc/FHGqFhdk/Chat-GPT-Image-27-may-2025-21-08-37.png') no-repeat center center;
       background-size: cover;
-      background-attachment: scroll;
+      background-attachment: fixed;
       z-index: -1;
     }
 
-    /* Contenedor principal */
     .container {
       display: flex;
       flex-direction: column;
@@ -37,7 +35,6 @@
       box-sizing: border-box;
     }
 
-    /* Menú de navegación */
     .navbar {
       background-color: rgba(0, 64, 128, 0.8);
       padding: 10px 20px;
@@ -70,7 +67,6 @@
       color: #ffcc00;
     }
 
-    /* Tarjeta de contenido */
     .card {
       background-color: rgba(255, 255, 255, 0.95);
       padding: 30px;
@@ -112,7 +108,6 @@
       font-weight: bold;
     }
 
-    /* Responsividad */
     @media (max-width: 600px) {
       .nav-list {
         flex-direction: column;
@@ -133,7 +128,6 @@
 <body>
   <div class="bg"></div>
   <div class="container">
-    <!-- Menú de navegación -->
     <nav class="navbar">
       <ul class="nav-list">
         <li><a href="#" onclick="mostrarSeccion('resultados')">Resultados del Delegado</a></li>
@@ -141,7 +135,6 @@
       </ul>
     </nav>
 
-    <!-- Tarjeta de contenido -->
     <div class="card">
       <h2 id="titulo">Resultados del Delegado</h2>
       <div id="contenido">Cargando datos...</div>
@@ -149,17 +142,14 @@
   </div>
 
   <script>
-    // Función para obtener el ID del delegado desde la URL
     function getDelegadoID() {
       const params = new URLSearchParams(window.location.search);
       return params.get("id");
     }
 
-    // URLs de las hojas de cálculo publicadas como CSV
     const urlResultados = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
     const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv";
 
-    // Función para mostrar la sección seleccionada
     function mostrarSeccion(seccion) {
       const id = getDelegadoID();
       const titulo = document.getElementById('titulo');
@@ -179,15 +169,14 @@
       }
     }
 
-    // Función para cargar los datos desde Google Sheets
     async function cargarDatos(url, id, tipo) {
       try {
         const response = await fetch(url);
         const texto = await response.text();
 
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-        const encabezados = filas[2]; // Fila 3 (índice 2) contiene los encabezados
-        const datos = filas.slice(3); // Datos a partir de la fila 4
+        const encabezados = filas[2];
+        const datos = filas.slice(3);
 
         const delegado = datos.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
@@ -206,7 +195,6 @@
 
           html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
           html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
-
           html += `<li><strong>Check-In:</strong> ${
             checkin.toUpperCase() === "REGISTRADO"
               ? `<span class="verde">REGISTRADO</span>`
@@ -235,7 +223,6 @@
       }
     }
 
-    // Cargar sección predeterminada
     window.onload = () => {
       mostrarSeccion('resultados');
     };
