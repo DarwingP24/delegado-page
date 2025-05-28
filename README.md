@@ -10,19 +10,9 @@
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    /* Fondo adaptable */
-    .bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background: url('https://i.postimg.cc/FHGqFhdk/Chat-GPT-Image-27-may-2025-21-08-37.png') no-repeat center center;
       background-size: cover;
-      background-attachment: fixed;
-      z-index: -1;
+      background-attachment: scroll;
     }
 
     .container {
@@ -126,8 +116,8 @@
   </style>
 </head>
 <body>
-  <div class="bg"></div>
   <div class="container">
+    <!-- Menú de navegación -->
     <nav class="navbar">
       <ul class="nav-list">
         <li><a href="#" onclick="mostrarSeccion('resultados')">Resultados del Delegado</a></li>
@@ -135,6 +125,7 @@
       </ul>
     </nav>
 
+    <!-- Tarjeta de contenido -->
     <div class="card">
       <h2 id="titulo">Resultados del Delegado</h2>
       <div id="contenido">Cargando datos...</div>
@@ -195,6 +186,7 @@
 
           html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
           html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
+
           html += `<li><strong>Check-In:</strong> ${
             checkin.toUpperCase() === "REGISTRADO"
               ? `<span class="verde">REGISTRADO</span>`
