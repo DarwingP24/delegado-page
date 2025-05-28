@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Delegado - Resultados y Ficha Médica</title>
   <style>
-    /* Estilos generales */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      width: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow-x: hidden;
     }
 
-    /* Contenedor del fondo */
     .bg {
       position: fixed;
       top: 0;
@@ -21,28 +21,29 @@
       width: 100vw;
       height: 100vh;
       background: url('https://i.postimg.cc/fTq7v4wc/BANNERS-C15-1.png') no-repeat center center;
-      background-size: cover;
+      background-size: cover; /* Alternativa: background-size: 100% 100%; si quieres evitar recortes */
+      background-attachment: fixed;
       z-index: -1;
     }
 
-    /* Contenedor principal */
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
-      padding: 20px;
+      padding: 5vh 5vw;
       box-sizing: border-box;
     }
 
-    /* Menú de navegación */
     .navbar {
       background-color: rgba(0, 64, 128, 0.8);
       padding: 10px 20px;
       border-radius: 5px;
       margin-bottom: 20px;
       text-align: center;
+      width: 100%;
+      max-width: 700px;
     }
 
     .nav-list {
@@ -63,19 +64,19 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
+      font-size: 1rem;
     }
 
     .nav-list li a:hover {
       color: #ffcc00;
     }
 
-    /* Tarjeta de contenido */
     .card {
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 10px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
       overflow-y: auto;
       max-height: 70vh;
@@ -84,6 +85,7 @@
     h2 {
       text-align: center;
       margin-bottom: 20px;
+      font-size: 1.6rem;
     }
 
     ul {
@@ -93,7 +95,7 @@
 
     li {
       margin-bottom: 10px;
-      font-size: 16px;
+      font-size: 1rem;
       color: #555;
     }
 
@@ -111,20 +113,42 @@
       font-weight: bold;
     }
 
-    /* Responsividad */
-    @media (max-width: 600px) {
+    /* Responsividad adicional */
+    @media (max-width: 768px) {
+      .container {
+        padding: 4vh 3vw;
+      }
+
+      .card {
+        padding: 20px;
+        max-height: none;
+      }
+
       .nav-list {
         flex-direction: column;
         align-items: center;
       }
 
       .nav-list li {
-        margin: 5px 0;
+        margin: 8px 0;
+      }
+
+      .nav-list li a {
+        font-size: 1.1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      li {
+        font-size: 0.95rem;
       }
 
       .card {
-        padding: 20px;
-        max-height: none;
+        padding: 15px;
       }
     }
   </style>
@@ -132,7 +156,6 @@
 <body>
   <div class="bg"></div>
   <div class="container">
-    <!-- Menú de navegación -->
     <nav class="navbar">
       <ul class="nav-list">
         <li><a href="#" onclick="mostrarSeccion('resultados')">Resultados del Delegado</a></li>
@@ -140,7 +163,6 @@
       </ul>
     </nav>
 
-    <!-- Tarjeta de contenido -->
     <div class="card">
       <h2 id="titulo">Resultados del Delegado</h2>
       <div id="contenido">Cargando datos...</div>
@@ -148,17 +170,14 @@
   </div>
 
   <script>
-    // Función para obtener el ID del delegado desde la URL
     function getDelegadoID() {
       const params = new URLSearchParams(window.location.search);
       return params.get("id");
     }
 
-    // URLs de las hojas de cálculo publicadas como CSV
     const urlResultados = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=0&single=true&output=csv";
     const urlFichaMedica = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT6fLIskyoJRS2F82f4Sb1oaxpvr2oro_-nyWKy3fDEN6VEtKY0mdrH9Pd5qyGLRpQF5GDVTgHVxCBT/pub?gid=2052349342&single=true&output=csv";
 
-    // Función para mostrar la sección seleccionada
     function mostrarSeccion(seccion) {
       const id = getDelegadoID();
       const titulo = document.getElementById('titulo');
@@ -178,15 +197,14 @@
       }
     }
 
-    // Función para cargar los datos desde Google Sheets
     async function cargarDatos(url, id, tipo) {
       try {
         const response = await fetch(url);
         const texto = await response.text();
 
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-        const encabezados = filas[2]; // Fila 3 (índice 2) contiene los encabezados
-        const datos = filas.slice(3); // Datos a partir de la fila 4
+        const encabezados = filas[2];
+        const datos = filas.slice(3);
 
         const delegado = datos.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
@@ -199,28 +217,25 @@
         let html = "<ul>";
 
         if (tipo === 'resultados') {
-          const delegacion = delegado[1]; // Columna B
-          const nombre = delegado[2];     // Columna C
-          const checkin = delegado[3];    // Columna D
+          const delegacion = delegado[1];
+          const nombre = delegado[2];
+          const checkin = delegado[3];
 
           html += `<li><strong>Nombre:</strong> ${nombre}</li>`;
           html += `<li><strong>Delegación:</strong> ${delegacion}</li>`;
 
-          // Estado de Check-In
           if (checkin.toUpperCase() === "REGISTRADO") {
             html += `<li><strong>Check-In:</strong> <span class="verde">REGISTRADO</span></li>`;
           } else {
             html += `<li><strong>Check-In:</strong> <span class="rojo">NO CHECK-IN</span></li>`;
           }
 
-          // Mostrar categorías y puntuaciones desde la columna E (índice 4)
           for (let i = 4; i < encabezados.length; i++) {
             const categoria = encabezados[i]?.trim() || `Categoría ${i + 1}`;
             const puntuacion = delegado[i]?.trim() || '0';
             html += `<li><strong>${categoria}:</strong> ${puntuacion}</li>`;
           }
         } else if (tipo === 'ficha') {
-          // Mostrar todos los campos de la ficha médica
           for (let i = 1; i < encabezados.length; i++) {
             const campo = encabezados[i]?.trim() || `Campo ${i + 1}`;
             const valor = delegado[i]?.trim() || 'N/A';
@@ -237,7 +252,6 @@
       }
     }
 
-    // Cargar la sección de resultados por defecto al cargar la página
     window.onload = () => {
       mostrarSeccion('resultados');
     };
