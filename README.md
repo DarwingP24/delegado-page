@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -10,18 +10,12 @@
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow-x: hidden;
     }
 
-    .bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: url('https://i.postimg.cc/FHGqFhdk/Chat-GPT-Image-27-may-2025-21-08-37.png') no-repeat center center;
+    body {
+      background: url('https://i.postimg.cc/9MzpyNPL/Chat-GPT-Image-27-may-2025-21-29-56.png') no-repeat center center fixed;
       background-size: cover;
-      z-index: -1;
+      overflow-x: hidden;
     }
 
     .container {
@@ -39,8 +33,9 @@
       padding: 10px 20px;
       border-radius: 5px;
       margin-bottom: 20px;
+      text-align: center;
       width: 100%;
-      max-width: 600px;
+      max-width: 700px;
     }
 
     .nav-list {
@@ -91,7 +86,7 @@
     li {
       margin-bottom: 10px;
       font-size: 16px;
-      color: #555;
+      color: #333;
     }
 
     .verde {
@@ -122,11 +117,14 @@
         padding: 20px;
         max-height: none;
       }
+
+      body {
+        background-attachment: scroll;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
   <div class="container">
     <nav class="navbar">
       <ul class="nav-list">
@@ -177,7 +175,6 @@
         const filas = texto.trim().split('\n').map(fila => fila.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
         const encabezados = filas[2];
         const datos = filas.slice(3);
-
         const delegado = datos.find(fila => fila[0].trim() === id);
         const contenedor = document.getElementById('contenido');
 
